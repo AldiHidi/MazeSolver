@@ -78,21 +78,67 @@ void push(coordinate data)
     }
 }
 
-int find_entrance(int v[], int n)
+coordinate find_entrance(int v[], int n)
 {
     int i;
+    coordinate data;
+    data.x = -1;
+    data.y = 0;
     for (i = 0; i < n; i++)
     {
         if (v[i] == 1)
         {
-            return i;
+            data.x = i;
+            return data;
         }
     }
-    return -1;
+    printf("There is no entrance!");
+    return data;
+}
+
+void navigate(coordinate pos){
+    if(pos.y == 9) {
+        return;
+    }
+    if(maze[pos.x][pos.y+1] == 1){
+        pos.y++;
+        push(pos);
+        navigate(pos);
+    }
+    if (maze[pos.x-1][pos.y] == 1){
+        pos.x--;
+        push(pos);
+        navigate(pos);
+    }
+    if (maze[pos.x+1][pos.y] == 1){
+        pos.x++;
+        push(pos);
+        navigate(pos);
+    }
+    if(maze[pos.x][pos.y-1] == 1){
+        pos.y++;
+        push(pos);
+        navigate(pos);
+    }
+    pop();
+    return;
+}
+
+void solve_maze(){
+    coordinate position = find_entrance(maze[0], MAZE_SIZE);
+    navigate(position);
+
 }
 
 int main(void)
 {
+    solve_maze();
+    int i;
+    for(i = 0; i <= top; i++){
+        printf("%d, %d", stack[i].x, stack[i].y);
+    }
+
+
 
     return 0;
 }
