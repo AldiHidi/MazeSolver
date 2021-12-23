@@ -63,7 +63,7 @@ coordinate pop()
         data.y = -1;
         return data;
     }
-}
+} 
 
 void push(coordinate data)
 {
